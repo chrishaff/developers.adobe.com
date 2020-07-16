@@ -59,12 +59,13 @@
     </coral-tablist>
     <coral-panelstack>
       <coral-panel>
-<pre><code class="language-javascript">// Create an ExecutionContext using credentials and create a new operation instance.
+<pre><code class="language-javascript">// Create an ExecutionContext using credentials and create a new operation instance.                 
 const executionContext = PDFToolsSdk.ExecutionContext.create(credentials),
   createPdfOperation = PDFToolsSdk.CreatePDF.Operation.createNew();
 
 // Set operation input from a source file.
-const input = PDFToolsSdk.FileRef.createFromLocalFile('resources/createPDFInput.docx');
+const input = PDFToolsSdk.FileRef
+  .createFromLocalFile('resources/createPDFInput.docx');
 createPdfOperation.setInput(input);
 
 // Execute the operation and Save the result to the specified location.
@@ -74,7 +75,7 @@ createPdfOperation.execute(executionContext)
       </coral-panel>
 
       <coral-panel>
-<pre><code class="language-clike">//Create an ExecutionContext using credentials and create a new operation instance.
+<pre><code class="language-clike">//Create an ExecutionContext using credentials and create a new operation instance.                       
 ExecutionContext executionContext = ExecutionContext.Create(credentials);
 CreatePDFOperation createPdfOperation = CreatePDFOperation.CreateNew();
 
@@ -91,7 +92,7 @@ result.SaveAs(Directory.GetCurrentDirectory() + "/output/createPdfOutput.pdf");
       </coral-panel>
 
       <coral-panel>
-<pre><code class="language-java">// Create an ExecutionContext using credentials and create a new operation instance.
+<pre><code class="language-java">// Create an ExecutionContext using credentials and create a new operation instance.               
 ExecutionContext executionContext = ExecutionContext.create( credentials );
 CreatePDFOperation htmlToPDFOperation = CreatePDFOperation.createNew();
 
