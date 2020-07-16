@@ -60,44 +60,33 @@
     <coral-panelstack>
       <coral-panel>
 <pre><code class="language-javascript">// Create an ExecutionContext using credentials and create a new operation instance.
-ExecutionContext executionContext = ExecutionContext.Create( credentials );
-CreatePDFOperation htmlToPDFOperation = CreatePDFOperation.CreateNew();
+const executionContext = PDFToolsSdk.ExecutionContext.create(credentials),
+  createPdfOperation = PDFToolsSdk.CreatePDF.Operation.createNew();
 
 // Set operation input from a source file.
-FileRef source = FileRef
-  .CreateFromLocalFile( @"createPDFFromStaticHtmlInput.zip" );
-htmlToPDFOperation.SetInput(source);
+const input = PDFToolsSdk.FileRef.createFromLocalFile('resources/createPDFInput.docx');
+createPdfOperation.setInput(input);
 
-// Provide any custom configuration options for the operation.
-SetCustomOptions( htmlToPDFOperation );
-
-// Execute the operation.
-FileRef result = htmlToPDFOperation.Execute( executionContext );
-
-// Save the result to the specified location.
-result.SaveAs( Directory.GetCurrentDirectory() +
-  "/output/createPdfFromStaticHtmlOutput.pdf" );
+// Execute the operation and Save the result to the specified location.
+createPdfOperation.execute(executionContext)
+  .then(result => result.saveAsFile('output/createPDFFromDOCX.pdf'))
 </code></pre>
       </coral-panel>
 
       <coral-panel>
-<pre><code class="language-clike">// Create an ExecutionContext using credentials and create a new operation instance.
-ExecutionContext executionContext = ExecutionContext.create( credentials );
-CreatePDFOperation htmlToPDFOperation = CreatePDFOperation.createNew();
+<pre><code class="language-clike">//Create an ExecutionContext using credentials and create a new operation instance.
+ExecutionContext executionContext = ExecutionContext.Create(credentials);
+CreatePDFOperation createPdfOperation = CreatePDFOperation.CreateNew();
 
 // Set operation input from a source file.
-FileRef source = FileRef
-  .createFromLocalFile( "src/main/resources/createPDFFromStaticHtmlInput.zip" );
-htmlToPDFOperation.setInput( source );
-
-// Provide any custom configuration options for the operation.
-setCustomOptions( htmlToPDFOperation );
+FileRef source = FileRef.CreateFromLocalFile(@"createPdfInput.docx");
+createPdfOperation.SetInput(source);
 
 // Execute the operation.
-FileRef result = htmlToPDFOperation.execute( executionContext );
+FileRef result = createPdfOperation.Execute(executionContext);
 
 // Save the result to the specified location.
-result.saveAs( "output/createPDFFromStaticHtmlOutput.pdf" );
+result.SaveAs(Directory.GetCurrentDirectory() + "/output/createPdfOutput.pdf");
 </code></pre>
       </coral-panel>
 
@@ -1188,12 +1177,11 @@ result.saveAs("output/protectPDFOutput.pdf");
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html"><div test id="adobe-dc-view" style="height: 360px; width: 500px;"></div>
-<script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-<script type="text/javascript">
+<pre><code class="language-markup">&ltdiv id="adobe-dc-view" style="height: 360px; width: 500px;">&lt;/div>
+&lt;script src="https://documentcloud.adobe.com/view-sdk/main.js">&lt;/script>
+&lt;script type="text/javascript">
   document.addEventListener("adobe_dc_view_sdk.ready", function(){
-    var adobeDCView = new AdobeDC.View({
-      clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
+    var adobeDCView = new AdobeDC.View({clientId: "&lt;YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
     adobeDCView.previewFile({
       content:{ location: 
         { url: "https://documentcloud.adobe.com/view-sdk-demo/PDFs/Bodea%20Brochure.pdf"}},
@@ -1203,7 +1191,7 @@ result.saveAs("output/protectPDFOutput.pdf");
       embedMode: "SIZED_CONTAINER"
     });
   });
-</script>
+&lt;/script>
 </code></pre>
         </coral-panel>
       </coral-panelstack>
@@ -1217,21 +1205,18 @@ result.saveAs("output/protectPDFOutput.pdf");
   <div id="annotations-code" class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
     <coral-tabview>
       <coral-tablist size="S">
-        <coral-tab>HTML</coral-tab>
+        <coral-tab>JavaScript</coral-tab>
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html">
-<script type="text/javascript">
-document.addEventListener("adobe_dc_view_sdk.ready", function(){
-  var adobeDCView = new AdobeDC.View({clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
+<pre><code class="language-js">document.addEventListener("adobe_dc_view_sdk.ready", function() {
+  var adobeDCView = new AdobeDC.View({clientId: "&lt;YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
   adobeDCView.previewFile({
-    content:   {location: {url: "(path to your PDF)/yourfilename.pdf"}},
+    content: {location: {url: "(path to your PDF)/yourfilename.pdf"}},
     metaData: {fileName: "yourfilename.pdf"}
   },
-  { showAnnotationTools: true });
+  {showAnnotationTools: true});
 });
-</script>
 </code></pre>
         </coral-panel>
       </coral-panelstack>
@@ -1245,13 +1230,11 @@ document.addEventListener("adobe_dc_view_sdk.ready", function(){
   <div id="analytics-code"  class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
     <coral-tabview>
       <coral-tablist size="S">
-        <coral-tab>HTML</coral-tab>
+        <coral-tab>JavaScript</coral-tab>
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html">
-<script type="text/javascript">
-adobeDCView.registerCallback(
+<pre><code class="language-html">adobeDCView.registerCallback(
   /* Type of call back */
   AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
   /* call back function */
@@ -1260,7 +1243,6 @@ adobeDCView.registerCallback(
   },
   { enablePDFAnalytics: true }
 );
-</script>
 </code></pre>
         </coral-panel>
       </coral-panelstack>
@@ -1274,13 +1256,11 @@ adobeDCView.registerCallback(
   <div id = "collaborative-code" class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
     <coral-tabview>
       <coral-tablist size="S">
-        <coral-tab>HTML</coral-tab>
+        <coral-tab>JavaScript</coral-tab>
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html">
-<script type="text/javascript">
-const profile = {
+<pre><code class="language-html">const profile = {
   userProfile: {
     name: '<name of user>',
     firstName: '<first name>',
@@ -1300,7 +1280,6 @@ adobeDCView.registerCallback(
   });
   }
 );
-</script>
 </code></pre>
         </coral-panel>
       </coral-panelstack>
@@ -1315,14 +1294,14 @@ adobeDCView.registerCallback(
   <div id="Save-code" class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
     <coral-tabview>
       <coral-tablist size="S">
-        <coral-tab>HTML</coral-tab>
+        <coral-tab>JavaScript</coral-tab>
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html">const saveOptions = {
-  autoSaveFrequency: <Number, default=0>,
-  enableFocusPolling: <Boolean, default=false>,
-  showSaveButton: <Boolean, default=true>
+<pre><code class="language-js">const saveOptions = {
+  autoSaveFrequency: &lt;Number, default=0>,
+  enableFocusPolling: &lt;Boolean, default=false>,
+  showSaveButton: &lt;Boolean, default=true>
 }
 
 adobeDCView.registerCallback(
@@ -1332,7 +1311,7 @@ adobeDCView.registerCallback(
       resolve({
         code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
         data: {
-          metaData: <File MetaData>
+          metaData: &lt;File MetaData>
         }
       });
     });
@@ -1348,27 +1327,24 @@ saveOptions);
 
 <!-- Menu Tools Options -->
 <p>
-  <div id="tools" class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
+  <div id="tools-code" class="sdk-embed-wrapper tab-container-annotations spectrum spectrum--darkest">
     <coral-tabview>
       <coral-tablist size="S">
         <coral-tab>HTML</coral-tab>
       </coral-tablist>
       <coral-panelstack>
         <coral-panel>
-<pre><code class="language-html">
-<script type="text/javascript">
-  <div id="adobe-dc-view"></div>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script type="text/javascript">
-    document.addEventListener("adobe_dc_view_sdk.ready", function () {
-      var adobeDCView = new AdobeDC.View({clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
-      adobeDCView.previewFile({
-        content:{location: {url: "https://documentcloud.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf"}},
-        metaData:{fileName: "Bodea Brochure.pdf"}
-      }, {"showLeftHandPanel": true, "showPageControls": false});
-    });
-  </script>
-</script>
+<pre><code class="language-html">&lt;div id="adobe-dc-view">&lt;/div>
+&lt;script src="https://documentcloud.adobe.com/view-sdk/main.js">&lt;/script>
+&lt;script type="text/javascript">
+  document.addEventListener("adobe_dc_view_sdk.ready", function () {
+    var adobeDCView = new AdobeDC.View({clientId: "&lt;YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
+    adobeDCView.previewFile({
+      content:{location: {url: "https://documentcloud.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf"}},
+      metaData:{fileName: "Bodea Brochure.pdf"}
+    }, {"showLeftHandPanel": true, "showPageControls": false});
+  });
+&lt;/script>
 </code></pre>
         </coral-panel>
       </coral-panelstack>
